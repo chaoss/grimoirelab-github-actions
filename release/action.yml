@@ -1,0 +1,25 @@
+name: 'Create a new release'
+description: 'Create a new release using the release notes for the tag.'
+inputs:
+  github-token:
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get release tag
+      id: tag
+      run: |
+        echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
+      shell: bash
+
+    - name: Create release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      with:
+        tag_name: ${{ steps.tag.outputs.tag }}
+        release_name: ${{ steps.tag.outputs.tag }}
+        body_path: ./releases/${{ steps.tag.outputs.tag }}.md

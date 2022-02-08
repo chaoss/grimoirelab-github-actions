@@ -19,3 +19,23 @@ steps:
       artifact-name: grimoire-dist
       artifact-path: dist
 ```
+
+
+## release
+
+Create a new GitHub release for the repository. 
+
+It uses the tag that triggered the workflow and the notes available under `releases/<tag>.md`.
+
+See [release/action.yml](release/action.yml)
+
+### Inputs
+- `github-token`: token provided by actions, read the usage.
+
+### Usage
+```yaml
+steps:
+  - uses: chaoss/grimoirelab-github-actions/release@master
+    with:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+```
