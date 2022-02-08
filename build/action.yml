@@ -1,0 +1,34 @@
+name: 'Build Python package'
+description: 'Build a Python package and store the results'
+inputs:
+  artifact-name:
+    default: "artifact"
+  artifact-path:
+    default: "dist"
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Build distributions
+      run: |
+        poetry build
+      shell: bash
+
+    - name: Upload distribution artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.artifact-path }}
