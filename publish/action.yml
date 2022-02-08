@@ -1,0 +1,43 @@
+name: 'Publish Python package'
+description: 'Publish a Python package already built using Poetry.'
+inputs:
+  artifact-name:
+    default: "artifact"
+  artifact-path:
+    default: "dist"
+  pypi-api-token:
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Download distribution artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.artifact-path }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Configure pypi credentials
+      env:
+        PYPI_API_TOKEN: ${{ inputs.pypi-api-token }}
+      run: |
+        poetry config http-basic.pypi __token__ "$PYPI_API_TOKEN"
+      shell: bash
+
+    - name: Publish release to pypi
+      run: |
+        poetry publish
+      shell: bash

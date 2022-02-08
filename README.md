@@ -39,3 +39,29 @@ steps:
     with:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+
+## publish
+
+Publish a Python package to PyPI using Poetry. 
+
+The package should be already built, you can use `grimoirelab-github-actions/build`.
+
+
+See [publish/action.yml](publish/action.yml)
+
+### Inputs
+- `artifact-name`: artifact name from previous jobs (default: artifact).
+- `artifact-path`: directory that contains the package to publish (default: dist).
+- `pypi-api-token`: token to publish the package in PyPI (required).
+
+
+### Usage
+```yaml
+steps:
+  - uses: chaoss/grimoirelab-github-actions/publish@master
+    with:
+      artifact-name: grimoire-dist
+      artifact-path: dist
+      pypi-api-token: ${{ secrets.PYPI_API_TOKEN }}
+```
