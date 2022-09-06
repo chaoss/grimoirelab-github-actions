@@ -20,13 +20,12 @@ runs:
       run: |
         curl -sSL https://install.python-poetry.org | python3 -
         echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
-        poetry self update --preview
         poetry self add poeblix
       shell: bash
 
     - name: Build distributions
       run: |
-        poetry blixbuild
+        poetry blixbuild --only-lock
         poetry build -f sdist
       shell: bash
 
