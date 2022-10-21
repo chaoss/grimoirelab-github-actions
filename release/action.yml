@@ -7,19 +7,17 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # 3.1.0
 
     - name: Get release tag
       id: tag
       run: |
-        echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
+        echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       shell: bash
 
     - name: Create release
-      uses: actions/create-release@v1
+      run: |
+        gh release create ${{ steps.tag.outputs.tag }} -t ${{ steps.tag.outputs.tag }} -F ./releases/${{ steps.tag.outputs.tag }}.md
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
-      with:
-        tag_name: ${{ steps.tag.outputs.tag }}
-        release_name: ${{ steps.tag.outputs.tag }}
-        body_path: ./releases/${{ steps.tag.outputs.tag }}.md
+      shell: bash
