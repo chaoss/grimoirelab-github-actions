@@ -5,11 +5,16 @@ inputs:
     default: "artifact"
   artifact-path:
     default: "dist"
+  skip-checkout:
+    description: "Set to 'yes' to avoid checking out the repository. Default 'no'."
+    default: "no"
+
 runs:
   using: 'composite'
   steps:
     - name: Checkout code
       uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # 3.1.0
+      if: inputs.skip-checkout != 'yes'
 
     - name: Set up Python
       uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984 # v4.3.0
