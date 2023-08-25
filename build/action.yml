@@ -23,7 +23,7 @@ runs:
 
     - name: Install poetry and add plugins
       run: |
-        curl -sSL https://install.python-poetry.org | python3 -
+        curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.5.1 python3 -
         echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
         poetry self add poeblix
       shell: bash
