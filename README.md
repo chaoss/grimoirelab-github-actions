@@ -9,6 +9,8 @@ See [build/action.yml](build/action.yml)
 ### Inputs
 - `artifact-name`: artifact name for future jobs (default: artifact).
 - `artifact-path`: directory that contains the package to store for future jobs (default: dist).
+- `skip-checkout`: set to 'yes' to avoid checking out the repository (default: 'no').
+- `pin-dependencies`: set to 'yes' to pin `poetry.lock` dependencies (default: 'no').
 
 ### Usage
 
@@ -18,6 +20,8 @@ steps:
     with:
       artifact-name: grimoire-dist
       artifact-path: dist
+      skip-checkout: yes
+      pin-dependencies: yes
 ```
 
 

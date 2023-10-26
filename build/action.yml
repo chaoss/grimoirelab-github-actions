@@ -8,6 +8,9 @@ inputs:
   skip-checkout:
     description: "Set to 'yes' to avoid checking out the repository. Default 'no'."
     default: "no"
+  pin-dependencies:
+    description: "Set to 'yes' to pin 'poetry.lock' dependencies. Default 'no'."
+    default: "no"
 
 runs:
   using: 'composite'
@@ -28,10 +31,15 @@ runs:
         poetry self add poeblix
       shell: bash
 
-    - name: Build distributions
+    - name: Build distributions.
       run: |
-        poetry blixbuild --only-lock
-        poetry build -f sdist
+        if [ ${{ inputs.pin-dependencies }} == 'yes' ]
+        then
+          poetry blixbuild --only-lock
+          poetry build -f sdist
+        else
+          poetry build
+        fi
       shell: bash
 
     - name: Upload distribution artifacts
