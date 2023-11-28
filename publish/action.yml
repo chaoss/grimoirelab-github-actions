@@ -38,6 +38,8 @@ runs:
       shell: bash
 
     - name: Publish release to pypi
+      env:
+        POETRY_REQUESTS_TIMEOUT: 120
       run: |
         poetry publish
       shell: bash
