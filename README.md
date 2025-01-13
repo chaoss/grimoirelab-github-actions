@@ -16,7 +16,7 @@ See [build/action.yml](build/action.yml)
 
 ```yaml
 steps:
-  - uses: chaoss/grimoirelab-github-actions/build@master
+  - uses: chaoss/grimoirelab-github-actions/build@main
     with:
       artifact-name: grimoire-dist
       artifact-path: dist
@@ -39,7 +39,7 @@ See [release/action.yml](release/action.yml)
 ### Usage
 ```yaml
 steps:
-  - uses: chaoss/grimoirelab-github-actions/release@master
+  - uses: chaoss/grimoirelab-github-actions/release@main
     with:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -63,7 +63,7 @@ See [publish/action.yml](publish/action.yml)
 ### Usage
 ```yaml
 steps:
-  - uses: chaoss/grimoirelab-github-actions/publish@master
+  - uses: chaoss/grimoirelab-github-actions/publish@main
     with:
       artifact-name: grimoire-dist
       artifact-path: dist
