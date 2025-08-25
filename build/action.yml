@@ -27,11 +27,17 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
 
-    - name: Install poetry and add plugins
+    - name: Install poetry and add poeblix if needed
       run: |
-        curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.5.1 python3 -
-        echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
-        poetry self add poeblix
+        if [ ${{ inputs.pin-dependencies }} == 'yes' ]
+        then
+          curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.5.1 python3 -
+          echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
+          poetry self add poeblix
+        else
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
+        fi
       shell: bash
 
     - name: Build distributions.
