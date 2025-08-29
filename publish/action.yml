@@ -26,8 +26,7 @@ runs:
 
     - name: Install poetry
       run: |
-        curl -sSL https://install.python-poetry.org | python3 -
-        echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
+        pipx install poetry
       shell: bash
 
     - name: Configure pypi credentials
