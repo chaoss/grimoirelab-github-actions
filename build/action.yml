@@ -31,10 +31,10 @@ runs:
       run: |
         if [ ${{ inputs.pin-dependencies }} == 'yes' ]
         then
-          pipx install poetry==1.5.1
+          pipx install poetry==1.5.1 --python $(which python)
           poetry self add poeblix
         else
-          pipx install poetry
+          pipx install poetry --python $(which python)
         fi
       shell: bash
 
